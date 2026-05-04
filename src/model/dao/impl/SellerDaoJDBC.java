@@ -49,6 +49,7 @@ public class SellerDaoJDBC implements SellerDao {
 				if (rs.next()) {
 					Long id = rs.getLong(1);
 					obj.setId(id);
+					System.out.println("Seller inserted: " + obj);
 				}
 				DB.closeResultSet(rs);
 			}
@@ -80,7 +81,11 @@ public class SellerDaoJDBC implements SellerDao {
 			st.setLong(5, obj.getDepartment().getId());
 			st.setLong(6, obj.getId());
 			
-			st.executeUpdate();
+			int rowsAffected = st.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("Seller successfully updated:");
+				System.out.println(obj);
+			}
 		}
 		catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -98,7 +103,10 @@ public class SellerDaoJDBC implements SellerDao {
 			
 			st.setLong(1, id);
 			
-			st.executeUpdate();
+			int rowsAffected = st.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("Seller successfully deleted.");
+			}
 		}
 		catch (SQLException e) {
 			throw new DbException(e.getMessage());
